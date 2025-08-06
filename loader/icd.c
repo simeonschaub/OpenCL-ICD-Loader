@@ -64,7 +64,7 @@ void khrIcdVendorAdd(const char *libraryName)
     KHRicdVendor *vendorIterator = NULL;
 
     // require that the library name be valid
-    if (!libraryName) 
+    if (!libraryName)
     {
         goto Done;
     }
@@ -157,7 +157,7 @@ void khrIcdVendorAdd(const char *libraryName)
             CL_PLATFORM_ICD_SUFFIX_KHR,
             suffixSize,
             suffix,
-            NULL);            
+            NULL);
         if (CL_SUCCESS != result)
         {
             free(suffix);
@@ -176,7 +176,7 @@ void khrIcdVendorAdd(const char *libraryName)
 
         // populate vendor data
         vendor->library = khrIcdOsLibraryLoad(libraryName);
-        if (!vendor->library) 
+        if (!vendor->library)
         {
             free(suffix);
             free(vendor);
@@ -211,7 +211,7 @@ Done:
 }
 
 #if defined(CL_ENABLE_LAYERS)
-void khrIcdLayerAdd(const char *libraryName)
+CL_API_ENTRY void CL_API_CALL *khrIcdLayerAdd(const char *libraryName)
 {
     void *library = NULL;
     cl_int result = CL_SUCCESS;
@@ -334,7 +334,7 @@ void khrIcdLayerAdd(const char *libraryName)
     }
 
     KHR_ICD_TRACE("successfully added layer %s\n", libraryName);
-    return;
+    return library;
 Done:
     if (library)
     {

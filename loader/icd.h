@@ -55,14 +55,14 @@
  */
 
 typedef cl_int (CL_API_CALL *pfn_clIcdGetPlatformIDs)(
-    cl_uint num_entries, 
-    cl_platform_id *platforms, 
+    cl_uint num_entries,
+    cl_platform_id *platforms,
     cl_uint *num_platforms) CL_API_SUFFIX__VERSION_1_0;
 
 typedef cl_int (CL_API_CALL *pfn_clGetPlatformInfo)(
-    cl_platform_id   platform, 
+    cl_platform_id   platform,
     cl_platform_info param_name,
-    size_t           param_value_size, 
+    size_t           param_value_size,
     void *           param_value,
     size_t *         param_value_size_ret) CL_API_SUFFIX__VERSION_1_0;
 
@@ -71,7 +71,7 @@ typedef void *(CL_API_CALL *pfn_clGetExtensionFunctionAddress)(
 
 typedef struct KHRicdVendorRec KHRicdVendor;
 
-/* 
+/*
  * KHRicdVendor
  *
  * Data for a single ICD vendor platform.
@@ -127,7 +127,7 @@ extern struct KHRLayer * khrFirstLayer;
 extern struct _cl_icd_dispatch khrMasterDispatch;
 #endif // defined(CL_ENABLE_LAYERS)
 
-/* 
+/*
  * khrIcd interface
  */
 
@@ -141,7 +141,7 @@ void khrIcdInitialize(void);
 // entrypoint to check and initialize trace.
 void khrIcdInitializeTrace(void);
 
-// go through the list of vendors (in /etc/OpenCL.conf or through 
+// go through the list of vendors (in /etc/OpenCL.conf or through
 // the registry) and call khrIcdVendorAdd for each vendor encountered
 // n.b, this call is OS-specific
 void khrIcdOsVendorsEnumerateOnce(void);
@@ -156,7 +156,11 @@ void khrIcdVendorAdd(const char *libraryName);
 void khrIcdLayersEnumerateEnv(void);
 
 // add a layer to the layer chain
-void khrIcdLayerAdd(const char *libraryName);
+#ifdef CL_ENABLE_LAYERS
+CL_API_ENTRY void CL_API_CALL *khrIcdLayerAdd(const char *libraryName);
+#else
+void *khrIcdLayerAdd(const char *libraryName);
+#endif
 
 // dynamically load a library.  returns NULL on failure
 // n.b, this call is OS-specific
@@ -172,7 +176,7 @@ void khrIcdOsLibraryUnload(void *library);
 
 // parse properties and determine the platform to use from them
 void khrIcdContextPropertiesGetPlatform(
-    const cl_context_properties *properties, 
+    const cl_context_properties *properties,
     cl_platform_id *outPlatform);
 
 // internal tracing macros

@@ -164,3 +164,6 @@ clSetProgramSpecializationConstant
 clCreateBufferWithProperties
 clCreateImageWithProperties
 clSetContextDestructorCallback
+
+; OpenCL ICD Loader Extensions
+khrIcdLayerAdd

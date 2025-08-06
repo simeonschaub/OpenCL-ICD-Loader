@@ -170,3 +170,8 @@ OPENCL_3.0 {
         clCreateImageWithProperties;
         clSetContextDestructorCallback;
 } OPENCL_2.2;
+
+OPENCL_ICD_LOADER_EXTENSIONS {
+    global:
+        khrIcdLayerAdd;
+} OPENCL_3.0;
